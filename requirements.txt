@@ -1,0 +1,23 @@
+# Redis 客户端
+redis==5.0.1
+
+# Milvus 客户端
+pymilvus==2.4.4
+
+# MongoDB 客户端
+pymongo==4.6.2
+
+# 日志库
+loguru==0.7.2
+
+# 嵌入处理
+sentence-transformers==2.2.2
+
+# API 框架
+fastapi==0.104.1
+uvicorn==0.24.0
+
+# 其他工具
+python-dotenv==1.0.0
+pydantic==2.5.0
+pydantic-settings==2.1.0
