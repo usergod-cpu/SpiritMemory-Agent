@@ -17,10 +17,27 @@ LOG_CONFIG = {
 
 # 向量生成配置
 EMBEDDING_CONFIG = {
-    "DEFAULT_EMBEDDING_DIM": 768,
-    "DEFAULT_MODEL_NAME": "sentence-transformers/all-MiniLM-L6-v2",
-    "DEFAULT_DEVICE": "cpu",
+    "EMBEDDING_TYPE": "online",  # online: 线上模型, local: 本地模型
+    "DEFAULT_EMBEDDING_DIM": 1024,  # 智谱 embedding-3 默认维度
     "DEFAULT_NORMALIZE": True,
+    
+    # 本地模型配置
+    "LOCAL_MODEL_NAME": "sentence-transformers/all-MiniLM-L6-v2",
+    "LOCAL_DEVICE": "cpu",
+    "LOCAL_EMBEDDING_DIM": 768,
+    
+    # 线上模型配置 (智谱 AI)
+    "ONLINE_PROVIDER": "zhipuai",  # zhipuai, openai, aliyun
+    "ONLINE_MODEL_NAME": "embedding-3",  # embedding-2, embedding-3
+    "ONLINE_API_KEY": "",  # 从环境变量 ZHIPUAI_API_KEY 读取
+    "ONLINE_API_BASE": "https://open.bigmodel.cn/api/paas/v4",
+    "ONLINE_EMBEDDING_DIM": 1024,  # embedding-3: 1024, embedding-2: 1024
+    
+    # OpenAI 配置 (备用)
+    "OPENAI_API_KEY": "",  # 从环境变量 OPENAI_API_KEY 读取
+    "OPENAI_API_BASE": "https://api.openai.com/v1",
+    "OPENAI_MODEL_NAME": "text-embedding-3-small",
+    "OPENAI_EMBEDDING_DIM": 1536,
 }
 
 # 文本处理配置

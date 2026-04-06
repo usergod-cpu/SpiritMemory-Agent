@@ -166,8 +166,11 @@ LOG_CONFIG = {
 
 # 向量生成配置
 EMBEDDING_CONFIG = {
-    "DEFAULT_EMBEDDING_DIM": 768,
-    "DEFAULT_MODEL_NAME": "sentence-transformers/all-MiniLM-L6-v2",
+    "EMBEDDING_TYPE": "online",
+    "DEFAULT_EMBEDDING_DIM": 1024,
+    "ONLINE_PROVIDER": "zhipuai",
+    "ONLINE_MODEL_NAME": "embedding-3",
+    "LOCAL_MODEL_NAME": "sentence-transformers/all-MiniLM-L6-v2",
 }
 
 # 文本处理配置
@@ -209,10 +212,39 @@ TEXT_PROCESS_CONFIG = {
 #### 4.5 向量生成 (embedding.py)
 
 **功能特性:**
-- 封装文本生成向量的统一接口
+- 支持线上模型（智谱 AI / OpenAI）
+- 支持本地模型（sentence-transformers）
 - 模型接口可替换
 - 支持单个文本和批量文本
-- 延迟初始化模型
+- 异常捕获与降级处理
+
+**配置项:**
+```python
+EMBEDDING_CONFIG = {
+    "EMBEDDING_TYPE": "online",  # online: 线上模型, local: 本地模型
+    
+    # 线上模型配置 (智谱 AI)
+    "ONLINE_PROVIDER": "zhipuai",
+    "ONLINE_MODEL_NAME": "embedding-3",
+    "ONLINE_API_KEY": "",
+    "ONLINE_EMBEDDING_DIM": 1024,
+    
+    # 本地模型配置
+    "LOCAL_MODEL_NAME": "sentence-transformers/all-MiniLM-L6-v2",
+    "LOCAL_EMBEDDING_DIM": 768,
+}
+```
+
+**使用方式:**
+```python
+# 线上模型（默认）
+generator = EmbeddingGenerator()
+vector = generator.encode("测试文本")
+
+# 本地模型
+generator = EmbeddingGenerator(embedding_type="local")
+vector = generator.encode("测试文本")
+```
 
 ---
 
@@ -335,6 +367,7 @@ MEMORY_RETRIEVAL_CONFIG = {
 ## Git 提交记录
 
 ```
+xxxxxxx - 更新 embedding 模块支持线上模型（智谱 AI / OpenAI）
 49dbd27 - 创建 utils 统一配置文件并更新所有模块使用统一配置
 01ea38a - 添加 memory 模块 README 文档
 fad5187 - 完成 memory 记忆模块开发
