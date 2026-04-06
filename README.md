@@ -35,6 +35,10 @@ SpiritMemory-Agent/
 ## 目录说明
 
 - **config/**: 存放所有配置文件，避免硬编码
+  - `db_config.py`: 数据库连接配置（Redis、MongoDB、Milvus）
+  - `memory_config.py`: 记忆相关配置
+  - `emotion_config.py`: 情感相关配置
+  - `global_const.py`: 全局常量配置
 - **database/**: 底层数据库连接封装，包括 Redis、Milvus 和 MongoDB
 - **utils/**: 通用工具函数，包括日志、嵌入处理和通用工具
 - **src/**: 业务核心代码，包含记忆、情感、自我认知、调度器、提示词和 API 模块
@@ -49,10 +53,29 @@ SpiritMemory-Agent/
 
 ## 快速开始
 
-1. 克隆项目
-2. 安装依赖：`pip install -r requirements.txt`
-3. 配置相关参数
-4. 启动服务
+1. **克隆项目**
+   ```bash
+   git clone https://github.com/usergod-cpu/SpiritMemory-Agent.git
+   cd SpiritMemory-Agent
+   ```
+
+2. **安装依赖**
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+3. **配置说明**
+   - 所有配置文件位于 `config/` 目录
+   - 数据库配置：`config/db_config.py`（本地环境已默认配置）
+   - 记忆配置：`config/memory_config.py`
+   - 情感配置：`config/emotion_config.py`
+   - 全局常量：`config/global_const.py`
+
+4. **启动服务**
+   ```bash
+   # 启动 API 服务
+   uvicorn src.api.main:app --host 0.0.0.0 --port 8000
+   ```
 
 ## 功能特性
 
