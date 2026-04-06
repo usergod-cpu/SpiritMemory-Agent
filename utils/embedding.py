@@ -13,12 +13,15 @@
 from typing import List, Union, Optional
 import numpy as np
 from .logger import get_logger
+from .utils_config import EMBEDDING_CONFIG
 
 
 logger = get_logger("Embedding")
 
-DEFAULT_EMBEDDING_DIM = 768
-DEFAULT_MODEL_NAME = "sentence-transformers/all-MiniLM-L6-v2"
+DEFAULT_EMBEDDING_DIM = EMBEDDING_CONFIG["DEFAULT_EMBEDDING_DIM"]
+DEFAULT_MODEL_NAME = EMBEDDING_CONFIG["DEFAULT_MODEL_NAME"]
+DEFAULT_DEVICE = EMBEDDING_CONFIG["DEFAULT_DEVICE"]
+DEFAULT_NORMALIZE = EMBEDDING_CONFIG["DEFAULT_NORMALIZE"]
 
 
 class EmbeddingGenerator:
@@ -32,7 +35,7 @@ class EmbeddingGenerator:
         self,
         model_name: str = DEFAULT_MODEL_NAME,
         embedding_dim: int = DEFAULT_EMBEDDING_DIM,
-        device: str = "cpu"
+        device: str = DEFAULT_DEVICE
     ):
         """
         初始化向量生成器
@@ -74,7 +77,7 @@ class EmbeddingGenerator:
     def encode(
         self,
         text: Union[str, List[str]],
-        normalize: bool = True
+        normalize: bool = DEFAULT_NORMALIZE
     ) -> Union[List[float], List[List[float]]]:
         """
         生成向量
@@ -207,7 +210,7 @@ class EmbeddingGenerator:
 def create_embedding_generator(
     model_name: str = DEFAULT_MODEL_NAME,
     embedding_dim: int = DEFAULT_EMBEDDING_DIM,
-    device: str = "cpu"
+    device: str = DEFAULT_DEVICE
 ) -> EmbeddingGenerator:
     """
     创建向量生成器
@@ -230,7 +233,7 @@ def create_embedding_generator(
 def encode_text(
     text: Union[str, List[str]],
     generator: Optional[EmbeddingGenerator] = None,
-    normalize: bool = True
+    normalize: bool = DEFAULT_NORMALIZE
 ) -> Union[List[float], List[List[float]]]:
     """
     编码文本为向量

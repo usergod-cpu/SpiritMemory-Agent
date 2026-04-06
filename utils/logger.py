@@ -13,18 +13,20 @@ import os
 from logging.handlers import TimedRotatingFileHandler
 from typing import Optional
 from datetime import datetime
+from .utils_config import LOG_CONFIG
 
-
-LOG_DIR = "logs"
-LOG_FORMAT = "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
-DATE_FORMAT = "%Y-%m-%d %H:%M:%S"
-DEFAULT_LOG_LEVEL = logging.INFO
 
 _loggers = {}
 
+LOG_DIR = LOG_CONFIG["LOG_DIR"]
+LOG_FORMAT = LOG_CONFIG["LOG_FORMAT"]
+DATE_FORMAT = LOG_CONFIG["DATE_FORMAT"]
+DEFAULT_LOG_LEVEL = getattr(logging, LOG_CONFIG["DEFAULT_LOG_LEVEL"])
+DEFAULT_LOGGER_NAME = LOG_CONFIG["DEFAULT_LOGGER_NAME"]
+
 
 def setup_logger(
-    name: str = "SpiritMemory",
+    name: str = DEFAULT_LOGGER_NAME,
     log_level: int = DEFAULT_LOG_LEVEL,
     log_dir: Optional[str] = None,
     console_output: bool = True,
@@ -70,8 +72,8 @@ def setup_logger(
             filename=log_file,
             when="midnight",
             interval=1,
-            backupCount=30,
-            encoding="utf-8"
+            backupCount=LOG_CONFIG["LOG_FILE_BACKUP_COUNT"],
+            encoding=LOG_CONFIG["LOG_FILE_ENCODING"]
         )
         file_handler.setLevel(log_level)
         file_handler.setFormatter(formatter)
@@ -81,7 +83,7 @@ def setup_logger(
     return logger
 
 
-def get_logger(name: str = "SpiritMemory") -> logging.Logger:
+def get_logger(name: str = DEFAULT_LOGGER_NAME) -> logging.Logger:
     """
     获取日志记录器
     
@@ -109,26 +111,26 @@ def set_log_level(level: int) -> None:
             handler.setLevel(level)
 
 
-def log_debug(message: str, logger_name: str = "SpiritMemory") -> None:
+def log_debug(message: str, logger_name: str = DEFAULT_LOGGER_NAME) -> None:
     """记录 DEBUG 级别日志"""
     get_logger(logger_name).debug(message)
 
 
-def log_info(message: str, logger_name: str = "SpiritMemory") -> None:
+def log_info(message: str, logger_name: str = DEFAULT_LOGGER_NAME) -> None:
     """记录 INFO 级别日志"""
     get_logger(logger_name).info(message)
 
 
-def log_warning(message: str, logger_name: str = "SpiritMemory") -> None:
+def log_warning(message: str, logger_name: str = DEFAULT_LOGGER_NAME) -> None:
     """记录 WARNING 级别日志"""
     get_logger(logger_name).warning(message)
 
 
-def log_error(message: str, logger_name: str = "SpiritMemory") -> None:
+def log_error(message: str, logger_name: str = DEFAULT_LOGGER_NAME) -> None:
     """记录 ERROR 级别日志"""
     get_logger(logger_name).error(message)
 
 
-def log_exception(message: str, logger_name: str = "SpiritMemory") -> None:
+def log_exception(message: str, logger_name: str = DEFAULT_LOGGER_NAME) -> None:
     """记录异常日志（包含堆栈信息）"""
     get_logger(logger_name).exception(message)

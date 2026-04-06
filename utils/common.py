@@ -12,6 +12,12 @@
 import uuid
 from datetime import datetime
 from typing import Any, Optional, Dict
+from .utils_config import COMMON_CONFIG
+
+
+DEFAULT_DATETIME_FORMAT = COMMON_CONFIG["DEFAULT_DATETIME_FORMAT"]
+DEFAULT_DATE_FORMAT = COMMON_CONFIG["DEFAULT_DATE_FORMAT"]
+DEFAULT_TIME_FORMAT = COMMON_CONFIG["DEFAULT_TIME_FORMAT"]
 
 
 def generate_uuid() -> str:
@@ -36,7 +42,45 @@ def get_current_time() -> datetime:
 
 def format_datetime(
     dt: Optional[datetime] = None,
-    fmt: str = "%Y-%m-%d %H:%M:%S"
+    fmt: str = DEFAULT_DATETIME_FORMAT
+) -> str:
+    """
+    格式化时间
+    
+    Args:
+        dt: 时间对象，为None时使用当前时间
+        fmt: 时间格式字符串
+    
+    Returns:
+        str: 格式化后的时间字符串
+    """
+    if dt is None:
+        dt = datetime.now()
+    return dt.strftime(fmt)
+
+
+def format_date(
+    dt: Optional[datetime] = None,
+    fmt: str = DEFAULT_DATE_FORMAT
+) -> str:
+    """
+    格式化日期
+    
+    Args:
+        dt: 时间对象，为None时使用当前时间
+        fmt: 日期格式字符串
+    
+    Returns:
+        str: 格式化后的日期字符串
+    """
+    if dt is None:
+        dt = datetime.now()
+    return dt.strftime(fmt)
+
+
+def format_time(
+    dt: Optional[datetime] = None,
+    fmt: str = DEFAULT_TIME_FORMAT
 ) -> str:
     """
     格式化时间
@@ -75,9 +119,9 @@ def safe_dict_get(
 
 
 def generate_version(
-    major: int = 1,
-    minor: int = 0,
-    patch: int = 0
+    major: int = COMMON_CONFIG["DEFAULT_VERSION_MAJOR"],
+    minor: int = COMMON_CONFIG["DEFAULT_VERSION_MINOR"],
+    patch: int = COMMON_CONFIG["DEFAULT_VERSION_PATCH"]
 ) -> str:
     """
     生成版本号

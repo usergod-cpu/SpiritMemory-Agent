@@ -11,13 +11,18 @@
 import re
 from typing import List, Optional, Set
 from .logger import get_logger
+from .utils_config import TEXT_PROCESS_CONFIG
 
 
 logger = get_logger("TextProcess")
 
-DEFAULT_MAX_LENGTH = 512
-DEFAULT_MIN_KEYWORD_LENGTH = 2
-DEFAULT_MAX_KEYWORDS = 10
+DEFAULT_MAX_LENGTH = TEXT_PROCESS_CONFIG["DEFAULT_MAX_LENGTH"]
+DEFAULT_MIN_KEYWORD_LENGTH = TEXT_PROCESS_CONFIG["DEFAULT_MIN_KEYWORD_LENGTH"]
+DEFAULT_MAX_KEYWORDS = TEXT_PROCESS_CONFIG["DEFAULT_MAX_KEYWORDS"]
+DEFAULT_TRUNCATE_SUFFIX = TEXT_PROCESS_CONFIG["DEFAULT_TRUNCATE_SUFFIX"]
+DEFAULT_CHUNK_SIZE = TEXT_PROCESS_CONFIG["DEFAULT_CHUNK_SIZE"]
+DEFAULT_OVERLAP = TEXT_PROCESS_CONFIG["DEFAULT_OVERLAP"]
+DEFAULT_STOP_WORDS = TEXT_PROCESS_CONFIG["DEFAULT_STOP_WORDS"]
 
 
 def clean_text(
@@ -64,7 +69,7 @@ def clean_text(
 def truncate_text(
     text: str,
     max_length: int = DEFAULT_MAX_LENGTH,
-    suffix: str = "..."
+    suffix: str = DEFAULT_TRUNCATE_SUFFIX
 ) -> str:
     """
     截断文本
@@ -116,12 +121,7 @@ def extract_keywords(
     
     try:
         if stop_words is None:
-            stop_words = {
-                "的", "是", "在", "了", "和", "与", "或", "有", "这", "那",
-                "the", "a", "an", "is", "are", "was", "were", "be", "been",
-                "being", "have", "has", "had", "do", "does", "did", "will",
-                "would", "could", "should", "may", "might", "must", "shall"
-            }
+            stop_words = DEFAULT_STOP_WORDS
         
         words = re.findall(r'[\u4e00-\u9fff]+|[a-zA-Z]+', text.lower())
         
@@ -186,8 +186,8 @@ def preprocess_text(
 
 def split_text_by_length(
     text: str,
-    chunk_size: int = 256,
-    overlap: int = 50
+    chunk_size: int = DEFAULT_CHUNK_SIZE,
+    overlap: int = DEFAULT_OVERLAP
 ) -> List[str]:
     """
     按长度分割文本
