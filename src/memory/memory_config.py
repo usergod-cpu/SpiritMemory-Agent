@@ -15,7 +15,7 @@ MEMORY_STORAGE_CONFIG = {
     # 温记忆配置（Milvus）
     "WARM_MEMORY": {
         "COLLECTION_NAME": "memory_warm",
-        "DIMENSION": 768,
+        "DIMENSION": 1024,
         "INDEX_TYPE": "IVF_FLAT",
         "METRIC_TYPE": "COSINE",
     },
