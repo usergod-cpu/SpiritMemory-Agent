@@ -3,9 +3,9 @@ SpiritMemory-Agent Utils 工具层
 
 提供企业级工具函数，包括：
 - logger: 全局统一日志
-- common: 通用工具（时间、ID、版本号等）
+- common_tools: 通用工具（时间、ID、版本号等）
 - text_process: 文本处理工具
-- embedding: 向量生成封装
+- embedding_utils: 向量生成封装
 """
 
 from .utils_config import (
@@ -27,7 +27,7 @@ from .logger import (
     log_exception,
 )
 
-from .common import (
+from .common_tools import (
     generate_uuid,
     get_current_time,
     format_datetime,
@@ -52,7 +52,7 @@ from .text_process import (
     remove_duplicates,
 )
 
-from .embedding import (
+from .embedding_utils import (
     EmbeddingGenerator,
     create_embedding_generator,
     encode_text,
