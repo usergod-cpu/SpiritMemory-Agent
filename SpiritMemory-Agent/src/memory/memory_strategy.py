@@ -13,7 +13,7 @@ from database.redis_client import get_redis_client
 from database.milvus_client import get_milvus_client
 from database.mongo_client import get_mongo_client
 from utils.logger import get_logger
-from utils.common import format_datetime
+from utils.common_tools import format_datetime
 from .memory_config import (
     MEMORY_STORAGE_CONFIG,
     MEMORY_WEIGHT_CONFIG,

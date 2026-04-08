@@ -9,7 +9,7 @@ from pymilvus import connections, Collection, FieldSchema, CollectionSchema, Dat
 import sys
 import os
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-from config.db_config import MILVUS_CONFIG
+from configurations.db_config import MILVUS_CONFIG
 from utils.logger import get_logger
 
 

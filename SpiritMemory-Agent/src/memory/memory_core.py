@@ -13,9 +13,9 @@ from database.redis_client import get_redis_client
 from database.milvus_client import get_milvus_client
 from database.mongo_client import get_mongo_client
 from utils.logger import get_logger
-from utils.embedding import EmbeddingGenerator
+from utils.embedding_utils import EmbeddingGenerator
 from utils.text_process import extract_keywords, preprocess_text
-from utils.common import generate_uuid, format_datetime
+from utils.common_tools import generate_uuid, format_datetime
 from .memory_config import (
     MEMORY_STORAGE_CONFIG,
     MEMORY_WEIGHT_CONFIG,
